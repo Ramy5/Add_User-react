@@ -1,0 +1,13 @@
+.new__user {
+  border: 1px solid #777;
+  background-color: #fff;
+  padding: 0.5rem 1rem;
+  color: #222;
+  font-size: 1.4rem;
+  margin-bottom: 0.2rem;
+}
+
+.new__user p {
+  margin: 0;
+  padding: 0;
+}

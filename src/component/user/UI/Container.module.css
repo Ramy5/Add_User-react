@@ -1,0 +1,21 @@
+.container {
+  width: 500px;
+  background-color: #fff;
+  padding: 1rem;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+@media (max-width: 280px) {
+  .container {
+    width: 240px;
+  }
+}
+
+@media (min-width: 281px) and (max-width: 767px) {
+  .container {
+    width: 300px;
+  }
+}
