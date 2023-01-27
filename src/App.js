@@ -16,10 +16,10 @@ function App() {
   };
 
   return (
-    <div>
+    <>
       <UserInput onAddNewUser={addNewUser} />
       {data.length !== 0 && <NewUserList userData={data} />}
-    </div>
+    </>
   );
 }
 

@@ -1,17 +1,20 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Container from "../UI/Container";
 import Button from "../UI/Button";
 import InvalidInput from "../invalidInput/InvalidInput";
 import styles from "./UserInput.module.css";
 
 const UserInput = (props) => {
-  const [user, setUser] = useState("");
-  const [age, setAge] = useState("");
+  // const [user, setUser] = useState("");
+  // const [age, setAge] = useState("");
+  const userInput = useRef();
+  const ageInput = useRef();
+
   const [isValid, setIsValid] = useState(true);
   const [invalidMessage, setInvalidMessage] = useState("");
 
-  const onUserChange = (e) => setUser(e.target.value);
-  const onAgeChange = (e) => setAge(e.target.value);
+  // const onUserChange = (e) => setUser(e.target.value);
+  // const onAgeChange = (e) => setAge(e.target.value);
   const validInputHandler = (isValid) => {
     if (isValid) setIsValid(true);
   };
@@ -19,15 +22,18 @@ const UserInput = (props) => {
   const onSubmitHandler = (e) => {
     e.preventDefault();
 
+    const userInputValue = userInput.current.value;
+    const ageInputValue = +ageInput.current.value;
+
     // INVALID AGE (NEGATIVE VALUE)
-    if (+age < 0) {
+    if (ageInputValue < 0) {
       setInvalidMessage("Please enter a valid age (> 0).");
       setIsValid(false);
       return;
     }
 
     // WHEN EMPTY INPUTS
-    if (!user || !age) {
+    if (!userInputValue || !ageInputValue) {
       setInvalidMessage(
         "Please enter a valid name and age (non-empty values)."
       );
@@ -38,19 +44,21 @@ const UserInput = (props) => {
     // COLLECT DATA
     const inputsData = {
       id: Date.now().toString(),
-      username: user,
-      age: +age,
+      username: userInputValue,
+      age: ageInputValue,
     };
     // MOVE DATA TO APP FILE
     props.onAddNewUser(inputsData);
 
     // EMPTY INPUTS AFTER SUBMIT
-    setUser("");
-    setAge("");
+    // setUser("");
+    // setAge("");
+    userInput.current.value = "";
+    ageInput.current.value = "";
   };
 
   return (
-    <div>
+    <>
       {!isValid && (
         <InvalidInput
           onDletePopup={validInputHandler}
@@ -63,15 +71,22 @@ const UserInput = (props) => {
           <input
             id="username"
             type="text"
-            value={user}
-            onChange={onUserChange}
+            // value={user}
+            // onChange={onUserChange}
+            ref={userInput}
           />
           <label htmlFor="age">Age (Years)</label>
-          <input id="age" type="number" value={age} onChange={onAgeChange} />
+          <input
+            id="age"
+            type="number"
+            // value={age}
+            // onChange={onAgeChange}
+            ref={ageInput}
+          />
           <Button type="submit">Add User</Button>
         </Container>
       </form>
-    </div>
+    </>
   );
 };
 
